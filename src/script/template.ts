@@ -1,9 +1,9 @@
 import { getCountryData } from "./getCountry";
 
-export function template(movie) {
-  const date = new Date().getFullYear();
-  const actors = movie.Actors.split(", ")
-    .map((x) => x.split(" ").slice(0, 1))
+export function template(movie: any): void {
+  const date: number = new Date().getFullYear();
+  const actors: string[] = movie.Actors.split(", ")
+    .map((x: string) => x.split(" ").slice(0, 1))
     .join(", ");
 
   const html = `
@@ -32,6 +32,10 @@ export function template(movie) {
       </li>
     `;
 
-  document.querySelector("#cards").insertAdjacentHTML("afterbegin", html);
+  const cards: HTMLUListElement = <HTMLUListElement>(
+    document.querySelector("#cards")
+  );
+
+  cards.insertAdjacentHTML("afterbegin", html);
   getCountryData(movie);
 }

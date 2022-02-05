@@ -1,9 +1,8 @@
-// var css = require("./src/style.css");
 var htmlWebpackPlugin = require("html-webpack-plugin");
 var path = require("path");
 
 module.exports = {
-  entry: path.resolve(__dirname, "src", "index.js"),
+  entry: path.resolve(__dirname, "src", "index.ts"),
   mode: "development", // production
   output: {
     path: path.resolve(__dirname, "./dist"),
@@ -18,11 +17,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js/,
+        test: /\.ts/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: ["babel-loader", "style-loader", "css-loader"],
+      },
+      {
         test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
     ],
+  },
+  resolve: {
+    extensions: [".ts", ".js", ".json"],
   },
 };
