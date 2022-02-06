@@ -1,12 +1,14 @@
 import { getCountry } from "./getCountry";
 import { getMovie } from "./getMovie";
 
-const sumInp: HTMLInputElement = <HTMLInputElement>(
-  (<unknown>document.querySelectorAll(".sum-inputs"))
+const sumInp = Array.from(
+  document.querySelectorAll(
+    ".sum-inputs"
+  ) as unknown as HTMLCollectionOf<HTMLInputElement>
 );
 
 export async function getPopulation(): Promise<void> {
-  const movies: string[] = [];
+  const movies: any[] = [];
   sumInp.forEach(async (input: any) => {
     const movie = await getMovie(input.value);
     movies.push(movie);
@@ -23,10 +25,12 @@ export async function getPopulation(): Promise<void> {
       movieCountries.map((i) => getCountry(i.movieCountry))
     ).then((data) => data.map((i) => i[0].population));
 
-    const sumOfPopulation = populations.reduce((acc, curr) => acc + curr);
+    const sumOfPopulation: number = populations.reduce(
+      (acc, curr) => acc + curr
+    );
     const sumOfPop: HTMLHeadingElement = <HTMLHeadingElement>(
       document.querySelector(".sum-of-population")
     );
-    sumOfPop.textContent += sumOfPopulation;
+    sumOfPop.textContent! += sumOfPopulation;
   }, 1000);
 }
